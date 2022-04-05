@@ -123,6 +123,25 @@ public class Conexao {
 
     }
     
+    // atualizar dado
+    public void atualizarID(String id, String tabela, String coluna, 
+            String valor) {
+        
+        try {
+            
+            String sql = "UPDATE" + tabela + "SET" + coluna + 
+                    " = '" + "WHERE" + id + " = '" + valor + "'";
+            
+            Statement stm = conexao.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
     // deletar id
     public void deletarID(String tabela, String coluna, String valor) {
     
