@@ -122,5 +122,23 @@ public class Conexao {
         return -1;
 
     }
+    
+    // deletar id
+    public void deletarID(String tabela, String coluna, String valor) {
+    
+        try {
+            
+            String sql = "DELETE * FROM "+ tabela + "WHERE" + coluna + 
+                    " = '" + valor + "'";
+            
+            Statement stm = conexao.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
 
 }
