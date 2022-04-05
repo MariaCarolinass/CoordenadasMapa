@@ -1,8 +1,8 @@
-# Lendo arquivo e salvando no banco de dados
+# Lendo arquivo e salvando dados no banco
 
-Lendo arquivo linha a linha e salvando dados no banco
+Lendo arquivo linha a linha e salvando dados no banco (Postgresql)
 
-**CRUD feito:**
+**CRUDs feito:**
 
 - Salvar dados
 - Buscar dado
