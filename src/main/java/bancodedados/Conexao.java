@@ -57,7 +57,7 @@ public class Conexao {
             
             // método de buscar id
             // (tabela, atributo, valor)
-            int id_sismica2d = getID("sismica2d", "nome", nome);
+            int id_sismica2d = buscarID("sismica2d", "nome", nome);
             
             ArrayList<Coord> listaCoord = dadosCoord.get(nome);
             
@@ -72,7 +72,7 @@ public class Conexao {
                         + " values ('" + nome + "')";
                         
                 stm.executeUpdate(sqlSismica);
-                id_sismica2d = getID("sismica2d", "nome", nome);
+                id_sismica2d = buscarID("sismica2d", "nome", nome);
             }
             
             // salvando os dados da tabela coord junto a chave de referência
@@ -98,7 +98,7 @@ public class Conexao {
     }
 
     // buscar id (select)
-    public int getID(String tabela, String coluna, String valor) {
+    public int buscarID(String tabela, String coluna, String valor) {
 
         try {
             
@@ -123,7 +123,7 @@ public class Conexao {
 
     }
     
-    // atualizar dado
+    // atualizar id
     public void atualizarID(String id, String tabela, String coluna, 
             String valor) {
         
