@@ -33,25 +33,34 @@ public class ConexaoTest {
 
     @Test
     public void testFecharConexao() {
-        System.out.println("FecharConexao");
-        Conexao instance = new Conexao();
-        instance.FecharConexao();
-        fail("The test case is a prototype.");
+        System.out.println("Fechar Conexão");
+        Conexao conexao = new Conexao();
+        if (conexao != null) {
+            conexao.FecharConexao();
+            System.out.println("Conexão fechada!");
+        }
     }
 
     @Test
     public void testInserirDados() throws Exception {
-        System.out.println("inserirDados");
+        System.out.println("Inserir Dados");
         String nome = "";
+        if (nome == null) {
+            System.out.println("Nome não existe!");
+            return;
+        }
+        Conexao conexao = new Conexao();
         Map<String, ArrayList<Coord>> dadosCoord = null;
-        Conexao instance = new Conexao();
-        instance.inserirDados(nome, dadosCoord);
-        fail("The test case is a prototype.");
+        if (dadosCoord != null) {
+            conexao.inserirDados(nome, dadosCoord);
+        } else {
+            System.out.println("Os dados da coordenada não existem!");
+        }
     }
 
     @Test
     public void testBuscarID() throws Exception {
-        System.out.println("buscarID");
+        System.out.println("Buscar ID");
         String tabela = "";
         String coluna = "";
         String valor = "";
@@ -64,7 +73,7 @@ public class ConexaoTest {
 
     @Test
     public void testAtualizarID() throws Exception {
-        System.out.println("atualizarID");
+        System.out.println("Atualizar ID");
         String id = "";
         String tabela = "";
         String coluna = "";
@@ -78,7 +87,7 @@ public class ConexaoTest {
 
     @Test
     public void testDeletarID() throws Exception {
-        System.out.println("deletarID");
+        System.out.println("Deletar ID");
         String tabela = "";
         String coluna = "";
         String valor = "";
