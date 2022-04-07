@@ -2,7 +2,6 @@ package principal;
 
 import coordenada.Coord;
 import arquivos.Arquivo;
-import arquivos.Kml;
 import bancodedados.Conexao;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ public class Principal {
         String path = "/Z/soarescarol/compartilhado/0294_POT_302_BOA_VISTA_2D.UKOOA.txt";
         Map <String, ArrayList<Coord>> dadosCoord = Arquivo.lerCoord(path);
         
-        conexao.inserirDados("0294-0181", null);
+        conexao.inserirDados("0294-0183", dadosCoord);
         
 //        // métodos
 //        Kml.exportKml("0294-0181", dadosCoord);
