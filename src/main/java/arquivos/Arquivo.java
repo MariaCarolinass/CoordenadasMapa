@@ -1,6 +1,6 @@
-package arquivo;
+package arquivos;
 
-import classe.Coord;
+import coordenadas.Coord;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,8 +29,6 @@ public class Arquivo {
                     Double y = Double.parseDouble(linha.substring(55, 64).trim());
                     Double z = Double.parseDouble(linha.substring(64, 70).trim());
                     Integer stn = Integer.parseInt(linha.substring(19, 25).trim());
-                    Integer contar = 0;
-                    Integer id_sismica2d = contar++;
                     
                     ArrayList <Coord> listaCoord = dadosCoord.get(nome);
                     
@@ -39,12 +37,15 @@ public class Arquivo {
                         dadosCoord.put(nome, listaCoord);
                     } 
                     
-                    listaCoord.add(new Coord(nome, lat, lon, x, y, z, stn, id_sismica2d));
+                    listaCoord.add(new Coord(nome, lat, lon, x, y, z, stn));
                     
                 }
             
             }
             
+        } catch (Exception e) {
+            System.out.println("Erro ao ler arquivo!");
+            e.printStackTrace();
         }
         
         return dadosCoord;

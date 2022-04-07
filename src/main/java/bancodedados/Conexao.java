@@ -1,6 +1,6 @@
 package bancodedados;
 
-import classe.Coord;
+import coordenadas.Coord;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,9 +27,10 @@ public class Conexao {
 
             Class.forName("org.postgresql.Driver");
             conexao = DriverManager.getConnection(url, usuario, senha);
-            System.out.println("Conexão realizada!");
-
+            System.out.println("Conexão do banco realizada!\n");
+            
         } catch (Exception e) {
+            System.out.println("Erro de conexão com o banco!");
             e.printStackTrace();
         }
 
@@ -42,121 +43,123 @@ public class Conexao {
 
             conexao.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar conexão com o banco!");
+            e.printStackTrace();
         }
 
     }
 
     // inserir os dados no banco
-    public void inserirDados(String nome, Map<String, ArrayList<Coord>> dadosCoord) {
+    public void inserirDados(String nome, 
+            Map<String, ArrayList<Coord>> dadosCoord) throws SQLException {
 
         try {
-
-            Statement stm = conexao.createStatement();
             
-            // método de buscar id
-            // (tabela, atributo, valor)
-            int id_sismica2d = buscarID("sismica2d", "nome", nome);
+            Statement stm = conexao.createStatement();
             
             ArrayList<Coord> listaCoord = dadosCoord.get(nome);
             
-            if (listaCoord == null) {
-                System.out.println("Linha " + nome + " não encntrada!");
-                return;
-            }
+            // chamando método para buscar id (tabela, atributo, valor)
+            int id_sismica2d = buscarID("sismica2d", "nome", nome);
             
-            // o id não existe, então inserir um novo dado
+            // inserindo os dados de sismica2d, caso id não exista
             if (id_sismica2d <= 0) {
-                String sqlSismica = "INSERT INTO sismica2d (nome)"
-                        + " values ('" + nome + "')";
                         
-                stm.executeUpdate(sqlSismica);
+                stm.executeUpdate("INSERT INTO sismica2d (nome) values "
+                    + "('" + nome + "')");
                 id_sismica2d = buscarID("sismica2d", "nome", nome);
+                
             }
             
-            // salvando os dados da tabela coord junto a chave de referência
-            for (Coord coord : listaCoord) {
-                
-                String sqlCoord = "INSERT INTO coord ("
+            // inserirndo os dados de coord
+            if (listaCoord != null) {
+             
+                for (Coord coord : listaCoord) {
+
+                    stm.executeUpdate("INSERT INTO coord ("
                         + "lat, lon, x, y, z, stn, id_sismica2d) "
-                        + "values ( '" + coord.getLat() + "', '" + coord.getLon() + "', "
-                        + coord.getX() + ", " + coord.getY() + ", "
-                        + coord.getZ() + ", " + coord.getStn() + ", "
-                        + id_sismica2d + ")";
-
-                stm.executeUpdate(sqlCoord);
+                        + "values ( '" + coord.getLat() + "', '"
+                        + coord.getLon() + "', " + coord.getX() + ", "
+                        + coord.getY() + ", " + coord.getZ() + ", "
+                        + coord.getStn() + ", " + id_sismica2d + ")");
+                    
+                }
+            
+                System.out.println("Dados cadastrados no banco de dados!"); 
                 
+            } else {
+                System.out.println("Linha " + nome + " não encntrada!");
             }
-
-            System.out.println("Dados cadastrados no banco de dados!");
-
+               
         } catch (SQLException e) {
+            System.out.println("Erro ao inserir os dados!");
             e.printStackTrace();
         }
-
+    
     }
 
     // buscar id (select)
-    public int buscarID(String tabela, String coluna, String valor) {
+    public int buscarID(String tabela, String coluna, String valor) 
+            throws SQLException {
 
         try {
-            
-            String sql = "SELECT * FROM " + tabela + " WHERE " + coluna +
-                    " = '" + valor + "'";
-
+           
             Statement stm = conexao.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
+            ResultSet rs = stm.executeQuery("SELECT * FROM " + tabela + 
+                " WHERE " + coluna + " = '" + valor + "'");
             
-            // se o id da consulta for diferente de nulo (id precisa ser > 0)
-            // retorna (adiciona) o valor do id na tabela
+            // se a consulta for diferente de nulo, o id é retornado
             if (rs != null && rs.next()) {
                 return rs.getInt("id");
             }
 
-        } catch (SQLException e) {
+        }
+        
+        catch (SQLException e) {
+            System.out.println("Erro ao buscar por id!");
             e.printStackTrace();
         }
         
-        // id inválido (id < 0)
         return -1;
 
     }
     
     // atualizar id
-    public void atualizarID(String id, String tabela, String coluna, 
-            String valor) {
+    public int atualizarID(String id, String tabela, String coluna, 
+            String valor) throws SQLException {
         
         try {
             
-            String sql = "UPDATE" + tabela + "SET" + coluna + 
-                    " = '" + "WHERE" + id + " = '" + valor + "'";
-            
             Statement stm = conexao.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            
+            ResultSet rs = stm.executeQuery("UPDATE" + tabela + "SET" + 
+                coluna + " = '" + "WHERE" + id + " = '" + valor + "'");
             
         } catch (SQLException e) {
+            System.out.println("Erro ao atualizar id!");
             e.printStackTrace();
         }
+        
+        return 0;
         
     }
     
     // deletar id
-    public void deletarID(String tabela, String coluna, String valor) {
+    public int deletarID(String tabela, String coluna, String valor) 
+            throws SQLException {
     
         try {
             
-            String sql = "DELETE * FROM "+ tabela + "WHERE" + coluna + 
-                    " = '" + valor + "'";
-            
             Statement stm = conexao.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
-            
+            ResultSet rs = stm.executeQuery("DELETE * FROM "+ tabela + 
+                    "WHERE" + coluna + " = '" + valor + "'");
             
         } catch (SQLException e) {
+            System.out.println("Erro ao deletar id!");
             e.printStackTrace();
         }
+        
+        return 0;
         
     }
 
