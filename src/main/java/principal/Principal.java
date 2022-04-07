@@ -21,7 +21,6 @@ public class Principal {
         
         conexao.inserirDados("0294-0183", dadosCoord);
         
-//        // métodos
 //        Kml.exportKml("0294-0181", dadosCoord);
 //        Kml.exportKml("0294-0182", dadosCoord);
 //        Kml.exportKml("0294-0183", dadosCoord);
