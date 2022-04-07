@@ -1,6 +1,6 @@
 package arquivos;
 
-import coordenada.Coord;
+import coordenadas.Coord;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

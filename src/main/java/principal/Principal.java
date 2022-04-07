@@ -1,6 +1,6 @@
 package principal;
 
-import coordenada.Coord;
+import coordenadas.Coord;
 import arquivos.Arquivo;
 import bancodedados.Conexao;
 import java.io.IOException;

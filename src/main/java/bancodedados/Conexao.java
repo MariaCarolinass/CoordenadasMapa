@@ -1,6 +1,6 @@
 package bancodedados;
 
-import coordenada.Coord;
+import coordenadas.Coord;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;

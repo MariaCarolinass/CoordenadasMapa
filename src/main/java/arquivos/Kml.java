@@ -1,7 +1,7 @@
 package arquivos;
 
 import utils.CoordUtils;
-import coordenada.Coord;
+import coordenadas.Coord;
 import java.util.ArrayList;
 import java.util.Map;
 
